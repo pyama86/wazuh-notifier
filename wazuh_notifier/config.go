@@ -23,13 +23,15 @@ func NewConfig(path string) (*Config, error) {
 }
 
 type Config struct {
-	Notifier   string
-	Endpoint   string
-	KibanaURL  string
-	Cert       string
-	Key        string
-	SlackToken string                 `toml:"slack_token"`
-	Groups     map[string]GroupConfig `toml:"groups"`
+	Notifier          string
+	Endpoint          string
+	KibanaURL         string
+	Cert              string
+	Key               string
+	SlackToken        string                 `toml:"slack_token"`
+	Groups            map[string]GroupConfig `toml:"groups"`
+	IgnoreHistoryFile string                 `toml:"ignore_history_file"`
+	IgnoreRepeatedMin int                    `toml:"ignore_repeated_min"`
 }
 
 type GroupConfig struct {
@@ -40,4 +42,6 @@ type GroupConfig struct {
 func defaultConfig(c *Config) {
 	c.Notifier = "slack"
 	c.Endpoint = "https://127.0.0.1:55000"
+	c.IgnoreHistoryFile = "/tmp/.wazuh_history"
+	c.IgnoreRepeatedMin = 3
 }

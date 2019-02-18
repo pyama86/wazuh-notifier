@@ -3,25 +3,33 @@ package wazuh_notifier
 import (
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/nlopes/slack"
+	"github.com/patrickmn/go-cache"
+	gocache "github.com/patrickmn/go-cache"
 )
 
 type Slack struct {
 	c     *Config
 	api   *slack.Client
 	wazuh *Wazuh
+	cache *gocache.Cache
 }
 
 func NewSlack(c *Config) *Slack {
+	cache := gocache.New(time.Duration(c.IgnoreRepeatedMin)*time.Minute, 5*time.Minute)
+	cache.LoadFile(c.IgnoreHistoryFile)
 	return &Slack{
 		c:     c,
 		api:   slack.New(c.SlackToken),
 		wazuh: NewWazuh(c),
+		cache: cache,
 	}
 }
 
 func (s *Slack) Notify(a *Alert) error {
+	defer s.cache.DeleteExpired()
 	color := "danger"
 	if a.Rule.Level <= 4 {
 		color = "good"
@@ -54,6 +62,14 @@ func (s *Slack) Notify(a *Alert) error {
 		return err
 	}
 	for _, g := range groups {
+		ruleID, found := s.cache.Get(g)
+		if found {
+			if ruleID == a.Rule.ID {
+				fmt.Printf("skip notify group %s, ruleid %s\n", g, a.Rule.ID)
+				continue
+			}
+		}
+
 		gd, ok := s.c.Groups[g]
 		if !ok || gd.SlackChannel == "" {
 			continue
@@ -89,7 +105,9 @@ func (s *Slack) Notify(a *Alert) error {
 		if err != nil {
 			return err
 		}
+		s.cache.Set(g, a.Rule.ID, cache.DefaultExpiration)
 	}
+	s.cache.SaveFile(s.c.IgnoreHistoryFile)
 	return nil
 }
 

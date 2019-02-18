@@ -28,6 +28,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
 	notifier := newNotifier(config)
 	stdin := bufio.NewScanner(os.Stdin)
 	if stdin.Scan() {

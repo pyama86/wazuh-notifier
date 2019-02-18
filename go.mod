@@ -41,6 +41,7 @@ require (
 	github.com/nicksnyder/go-i18n v1.10.0 // indirect
 	github.com/nlopes/slack v0.5.0
 	github.com/openzipkin/zipkin-go v0.1.5 // indirect
+	github.com/patrickmn/go-cache v2.1.0+incompatible
 	github.com/pelletier/go-toml v1.2.0 // indirect
 	github.com/peterh/liner v1.1.0 // indirect
 	github.com/pkg/errors v0.8.1 // indirect
@@ -78,6 +79,7 @@ require (
 	golang.org/x/perf v0.0.0-20190124201629-844a5f5b46f4 // indirect
 	golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a // indirect
 	golang.org/x/tools v0.0.0-20190214204934-8dcb7bc8c7fe // indirect
+	google.golang.org/appengine v1.4.0
 	google.golang.org/genproto v0.0.0-20190215211957-bd968387e4aa // indirect
 	google.golang.org/grpc v1.18.0 // indirect
 	gopkg.in/alecthomas/kingpin.v3-unstable v3.0.0-20180810215634-df19058c872c // indirect
