@@ -1,0 +1,5 @@
+endpoint = "http://example.com"
+slack_token = "example-token"
+[groups.example]
+slack_channel = "example-channel"
+slack_mention = "example-mention"
