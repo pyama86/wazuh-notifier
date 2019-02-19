@@ -62,12 +62,10 @@ func (s *Slack) Notify(a *Alert) error {
 		return err
 	}
 	for _, g := range groups {
-		ruleID, found := s.cache.Get(g)
+		_, found := s.cache.Get(g + a.Rule.ID)
 		if found {
-			if ruleID == a.Rule.ID {
-				fmt.Printf("skip notify group %s, ruleid %s\n", g, a.Rule.ID)
-				continue
-			}
+			fmt.Printf("skip notify group %s, ruleid %s\n", g, a.Rule.ID)
+			continue
 		}
 
 		gd, ok := s.c.Groups[g]
@@ -105,7 +103,7 @@ func (s *Slack) Notify(a *Alert) error {
 		if err != nil {
 			return err
 		}
-		s.cache.Set(g, a.Rule.ID, cache.DefaultExpiration)
+		s.cache.Set(g+a.Rule.ID, a.Rule.ID, cache.DefaultExpiration)
 	}
 	s.cache.SaveFile(s.c.IgnoreHistoryFile)
 	return nil
