@@ -22,7 +22,7 @@ func newNotifier(c *wazuh_notifier.Config) Notifier {
 	return nil
 }
 func main() {
-	path := flag.String("config", "/var/ossec/etc/wazuh_slack.toml", "config file path")
+	path := flag.String("config", "/var/ossec/etc/wazuh-notifier.toml", "config file path")
 	flag.Parse()
 	config, err := wazuh_notifier.NewConfig(*path)
 	if err != nil {
