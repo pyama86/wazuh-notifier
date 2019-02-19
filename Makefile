@@ -30,4 +30,4 @@ goreleaser: ## Upload to Github releases without token check
 	GOVERSION=$(GOVERSION) goreleaser --rm-dist --skip-validate
 
 release:
-	git semv minor --pre --build --bump
+	git semv minor --bump
