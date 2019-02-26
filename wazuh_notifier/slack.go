@@ -65,7 +65,7 @@ func (s *Slack) Notify(a *Alert) error {
 	for _, g := range groups {
 		_, found := s.cache.Get(g + a.Rule.ID)
 		if found {
-			fmt.Printf("skip notify group %s, ruleid %s\n", g, a.Rule.ID)
+			log.Infof("skip notify group %s, ruleid %s\n", g, a.Rule.ID)
 			continue
 		}
 
