@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"encoding/json"
 	"flag"
-	"log"
 	"os"
+
+	"github.com/apex/log"
 
 	"github.com/pyama86/wazuh-tailer/wazuh_notifier"
 )
