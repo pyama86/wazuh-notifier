@@ -7,6 +7,7 @@ require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/Shopify/sarama v1.20.1 // indirect
 	github.com/alecthomas/gometalinter v3.0.0+incompatible // indirect
+	github.com/apex/log v1.1.0
 	github.com/coreos/go-systemd v0.0.0-20190212144455-93d5ec2c7f76 // indirect
 	github.com/cosiner/argv v0.0.1 // indirect
 	github.com/davidrjenni/reftools v0.0.0-20180914123528-654d0ba4f96d // indirect

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/apex/log"
 	"github.com/nlopes/slack"
 	"github.com/patrickmn/go-cache"
 	gocache "github.com/patrickmn/go-cache"
@@ -103,6 +104,7 @@ func (s *Slack) Notify(a *Alert) error {
 		if err != nil {
 			return err
 		}
+		log.Infof("notify slack to %s", gd.SlackChannel)
 		s.cache.Set(g+a.Rule.ID, a.Rule.ID, cache.DefaultExpiration)
 	}
 	s.cache.SaveFile(s.c.IgnoreHistoryFile)
