@@ -60,7 +60,7 @@ func (s *Slack) Notify(a *Alert) error {
 
 	groups, err := s.wazuh.getGroups(a.Agent.ID)
 	if err != nil {
-		return err
+		return fmt.Errorf("get group error agent_id %s", a.Agent.ID)
 	}
 	for _, g := range groups {
 		_, found := s.cache.Get(g + a.Rule.ID)
@@ -78,7 +78,7 @@ func (s *Slack) Notify(a *Alert) error {
 		if gd.SlackMention != "" {
 			mid, err := s.mentionID(gd.SlackMention)
 			if err != nil {
-				return err
+				return fmt.Errorf("get slack mention error mention %s", gd.SlackMention)
 			}
 			text = "<!subteam^" + mid + "|" + "@" + gd.SlackMention + ">" + " " + a.Message()
 		}
@@ -102,7 +102,7 @@ func (s *Slack) Notify(a *Alert) error {
 		)
 
 		if err != nil {
-			return err
+			return fmt.Errorf("send slack error %s channel %s", err, gd.SlackChannel)
 		}
 		log.Infof("notify slack to %s", gd.SlackChannel)
 		s.cache.Set(g+a.Rule.ID, a.Rule.ID, cache.DefaultExpiration)
