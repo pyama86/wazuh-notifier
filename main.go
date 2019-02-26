@@ -4,8 +4,9 @@ import (
 	"bufio"
 	"encoding/json"
 	"flag"
-	"log"
 	"os"
+
+	"github.com/apex/log"
 
 	"github.com/pyama86/wazuh-tailer/wazuh_notifier"
 )
@@ -26,7 +27,7 @@ func main() {
 	flag.Parse()
 	config, err := wazuh_notifier.NewConfig(*path)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(err.Error())
 	}
 
 	notifier := newNotifier(config)
@@ -35,11 +36,11 @@ func main() {
 		a := wazuh_notifier.Alert{}
 		err := json.Unmarshal(stdin.Bytes(), &a)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal(err.Error())
 		}
 		err = notifier.Notify(&a)
 		if err != nil {
-			log.Fatal(err)
+			log.Fatal(err.Error())
 		}
 	}
 }
