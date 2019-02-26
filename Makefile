@@ -25,9 +25,6 @@ deps: ## Installing dependencies for development
 	go get github.com/goreleaser/goreleaser
 	go get -u github.com/linyows/git-semv/cmd/git-semv
 
-goreleaser: ## Upload to Github releases without token check
-	@echo "$(INFO_COLOR)==> $(RESET)$(BOLD)Releasing for Github$(RESET)"
-	GOVERSION=$(GOVERSION) goreleaser --rm-dist --skip-validate
-
 release:
 	git semv minor --bump
+	GOVERSION=$(GOVERSION) goreleaser --rm-dist --skip-validate
