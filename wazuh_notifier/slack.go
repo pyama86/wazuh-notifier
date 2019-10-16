@@ -60,7 +60,8 @@ func (s *Slack) Notify(a *Alert) error {
 
 	groups, err := s.wazuh.getGroups(a.Agent.ID)
 	if err != nil {
-		return fmt.Errorf("get group error agent_id %s", a.Agent.ID)
+		log.Errorf("get group error agent_id %s", a.Agent.ID)
+		return nil
 	}
 	for _, g := range groups {
 		_, found := s.cache.Get(g + a.Rule.ID)
