@@ -7,7 +7,6 @@ import (
 
 	"github.com/apex/log"
 	"github.com/nlopes/slack"
-	"github.com/patrickmn/go-cache"
 	gocache "github.com/patrickmn/go-cache"
 )
 
@@ -60,7 +59,7 @@ func (s *Slack) Notify(a *Alert) error {
 
 	groups, err := s.wazuh.getGroups(a.Agent.ID)
 	if err != nil {
-		log.Errorf("get group error agent_id %s", a.Agent.ID)
+		log.Errorf("get group error agent_id %s : %s", a.Agent.ID, err.Error())
 		return nil
 	}
 	for _, g := range groups {
@@ -79,7 +78,7 @@ func (s *Slack) Notify(a *Alert) error {
 		if gd.SlackMention != "" {
 			mid, err := s.mentionID(gd.SlackMention)
 			if err != nil {
-				return fmt.Errorf("get slack mention error mention %s", gd.SlackMention)
+				return fmt.Errorf("get slack mention error mention %s : %s", gd.SlackMention, err.Error())
 			}
 			text = "<!subteam^" + mid + "|" + "@" + gd.SlackMention + ">" + " " + a.Message()
 		}
