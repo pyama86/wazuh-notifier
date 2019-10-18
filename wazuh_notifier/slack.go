@@ -105,7 +105,7 @@ func (s *Slack) Notify(a *Alert) error {
 			return fmt.Errorf("send slack error %s channel %s", err, gd.SlackChannel)
 		}
 		log.Infof("notify slack to %s", gd.SlackChannel)
-		s.cache.Set(g+a.Rule.ID, a.Rule.ID, cache.DefaultExpiration)
+		s.cache.Set(g+a.Rule.ID, a.Rule.ID, gocache.DefaultExpiration)
 	}
 	s.cache.SaveFile(s.c.IgnoreHistoryFile)
 	return nil
